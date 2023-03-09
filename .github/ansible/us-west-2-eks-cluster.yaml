@@ -1,0 +1,27 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: neondemo-usw2
+  region: us-west-2
+
+nodeGroups:
+  - name: ng-1
+    instanceType: m5.large
+    desiredCapacity: 3
+
+iamIdentityMappings:
+  - arn: arn:aws:iam::393759475545:role/OrganizationAccountAccessRole
+    groups:
+      - system:masters
+    username: admin
+    noDuplicateARNs: true
+
+iam:
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      name: aws-load-balancer-controller
+      namespace: kube-system
+    attachPolicyARNs:
+    - "arn:aws:iam::393759475545:policy/AWSLoadBalancerControllerIAMPolicy"
