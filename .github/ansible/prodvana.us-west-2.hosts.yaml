@@ -1,0 +1,49 @@
+storage:
+  vars:
+    bucket_name: pvn-neon-demo-storage-us-west-2
+    bucket_region: us-west-2
+    console_mgmt_base_url: http://neon-internal-api.aws.neon.build
+    broker_endpoint: http://storage-broker-lb.beta.us-west-2.internal.aws.neon.build:50051
+    pageserver_config_stub:
+      pg_distrib_dir: /usr/local
+      metric_collection_endpoint: http://neon-internal-api.aws.neon.build/billing/api/v1/usage_events
+      metric_collection_interval: 10min
+      tenant_config:
+        eviction_policy:
+          kind: "LayerAccessThreshold"
+          period: "20m"
+          threshold: "20m"
+      remote_storage:
+        bucket_name: "{{ bucket_name }}"
+        bucket_region: "{{ bucket_region }}"
+        prefix_in_bucket: "pageserver/v1"
+    safekeeper_s3_prefix: safekeeper/v1/wal
+    hostname_suffix: ""
+    remote_user: ssm-user
+    ansible_aws_ssm_region: us-west-2
+    ansible_aws_ssm_bucket_name: pvn-neon-demo-storage-us-west-2
+    console_region_id: aws-us-west-2
+    sentry_environment: staging
+
+  children:
+    pageservers:
+      hosts:
+        pageserver-0.us-west-2.aws.neon.build:
+          ansible_host: i-0db7870a47837f098
+        pageserver-1.us-west-2.aws.neon.build:
+          ansible_host: i-02852566b50144b46
+        pageserver-2.us-west-2.aws.neon.build:
+          ansible_host: i-0e50c40a5cd11c1f8
+        pageserver-99.us-west-2.aws.neon.build:
+          ansible_host: i-097d96cd90d5fc639
+
+    safekeepers:
+      hosts:
+        safekeeper-0.us-west-2.aws.neon.build:
+          ansible_host: i-0e09cd108279eb4f5
+        safekeeper-1.us-west-2.aws.neon.build:
+          ansible_host: i-06083acd29327dce3
+        safekeeper-2.us-west-2.aws.neon.build:
+          ansible_host: i-0ba39b03d290c65a3
+        safekeeper-99.us-west-2.aws.neon.build:
+          ansible_host: i-0f0929baf23d4127e
