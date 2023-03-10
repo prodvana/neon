@@ -171,3 +171,17 @@
       become: true
       tags:
       - safekeeper
+
+- name: Emit version file
+  hosts: storage
+  gather_facts: False
+  remote_user: "{{ remote_user }}"
+
+  tasks:
+    - name: emit version file
+      copy:
+        dest: "/var/run/{{ pvn_service }}.version"
+        content: "{{ pvn_service_version }}"
+      tags:
+      - pageserver
+      - safekeeper
