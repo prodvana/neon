@@ -1,8 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 # fetch params from meta-data service
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
 AZ_ID=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+declare -A IDS=([i-0e09cd108279eb4f5]=0 [i-06083acd29327dce3]=1 [i-0ba39b03d290c65a3]=2 [i-0f0929baf23d4127e]=99)
 
 # store fqdn hostname in var
 HOST=$(hostname -f)
@@ -21,11 +22,8 @@ cat <<EOF | tee /tmp/payload
 }
 EOF
 
-# check if safekeeper already registered or not
-if ! curl -sf -H "Authorization: Bearer {{ CONSOLE_API_TOKEN }}" {{ console_mgmt_base_url }}/management/api/v2/safekeepers/${INSTANCE_ID} -o /dev/null; then
-
-    # not registered, so register it now
-    ID=$(curl -sf -X POST -H "Authorization: Bearer {{ CONSOLE_API_TOKEN }}" {{ console_mgmt_base_url }}/management/api/v2/safekeepers -d@/tmp/payload | jq -r '.id')
-    # init safekeeper
-    sudo -u safekeeper /usr/local/bin/safekeeper --id ${ID} --init -D /storage/safekeeper/data
+if [[ ! -f /storage/safekeeper/data/safekeeper.toml ]]; then
+	# init safekeeper
+	ID=${IDS["$INSTANCE_ID"]}
+	sudo -u safekeeper /usr/local/bin/safekeeper --id ${ID} --init -D /storage/safekeeper/data
 fi
