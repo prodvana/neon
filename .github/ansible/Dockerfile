@@ -1,7 +1,7 @@
 FROM willhallonline/ansible:2.13-bullseye
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-  apt-get install -y python3-boto3 python3-toml curl && \
+  apt-get install -y python3-boto3 python3-toml curl jq && \
   rm -rf /var/lib/apt/lists/* && \
   apt-get clean
 

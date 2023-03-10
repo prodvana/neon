@@ -1,0 +1,15 @@
+- name: Read version files
+  hosts: storage
+  gather_facts: False
+  remote_user: "{{ remote_user }}"
+
+  tasks:
+    - name: Read existing service version
+      ansible.builtin.fetch:
+        src: "/var/run/{{ pvn_service }}.version"
+        dest: "/tmp/versions/{{ inventory_hostname }}"
+        flat: true
+        fail_on_missing: false
+      tags:
+      - pageserver
+      - safekeeper
