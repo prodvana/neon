@@ -3,7 +3,7 @@ storage:
     bucket_name: pvn-neon-demo-storage-us-west-2
     bucket_region: us-west-2
     console_mgmt_base_url: http://neon-internal-api.aws.neon.build
-    broker_endpoint: http://storage-broker-lb.beta.us-west-2.internal.aws.neon.build:50051
+    broker_endpoint: http://k8s-neonstor-neonstor-0fe36a4e1e-7694288635d4e968.elb.us-west-2.amazonaws.com:50051
     pageserver_config_stub:
       pg_distrib_dir: /usr/local
       metric_collection_endpoint: http://neon-internal-api.aws.neon.build/billing/api/v1/usage_events
@@ -28,22 +28,16 @@ storage:
   children:
     pageservers:
       hosts:
-        pageserver-0.us-west-2.aws.neon.build:
+        ec2-18-237-173-164.us-west-2.compute.amazonaws.com:
           ansible_host: i-0db7870a47837f098
-        pageserver-1.us-west-2.aws.neon.build:
-          ansible_host: i-02852566b50144b46
-        pageserver-2.us-west-2.aws.neon.build:
-          ansible_host: i-0e50c40a5cd11c1f8
-        pageserver-99.us-west-2.aws.neon.build:
-          ansible_host: i-097d96cd90d5fc639
 
     safekeepers:
       hosts:
-        safekeeper-0.us-west-2.aws.neon.build:
+        ec2-34-221-41-207.us-west-2.compute.amazonaws.com:
           ansible_host: i-0e09cd108279eb4f5
-        safekeeper-1.us-west-2.aws.neon.build:
+        ec2-34-219-180-253.us-west-2.compute.amazonaws.com:
           ansible_host: i-06083acd29327dce3
-        safekeeper-2.us-west-2.aws.neon.build:
+        ec2-35-92-31-168.us-west-2.compute.amazonaws.com:
           ansible_host: i-0ba39b03d290c65a3
-        safekeeper-99.us-west-2.aws.neon.build:
+        ec2-35-91-115-171.us-west-2.compute.amazonaws.com:
           ansible_host: i-0f0929baf23d4127e

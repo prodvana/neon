@@ -9,7 +9,7 @@ service:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: external  # use newer AWS Load Balancer Controller
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internal  # deploy LB to private subnet
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing  # deploy LB to private subnet # PVN-FIXME: Expose publicly to work around cross-VPC traffic setup
     # assign service to this name at external-dns
     external-dns.alpha.kubernetes.io/hostname: storage-broker-lb.us-west-2.internal.aws.neon.build
   # service.type -- Service type
