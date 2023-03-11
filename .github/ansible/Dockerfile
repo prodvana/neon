@@ -25,4 +25,6 @@ RUN ansible-galaxy collection install \
     sivel.toiletwater
 
 COPY . .
+COPY --from=us-docker.pkg.dev/pvn-infra/pvn-public/pvn-wrapper:latest /pvn-wrapper /bin/pvn-wrapper
+ENTRYPOINT ["/bin/pvn-wrapper"]
 # CMD ["ansible-playbook", "-v", "deploy.yaml", "-i", "prodvana.us-west-2.hosts.yaml", "-e", "@ssm_config"]

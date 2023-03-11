@@ -18,7 +18,7 @@ mkdir neon_install
 # retrieve binaries from docker image
 # Running docker inside Docker or inside Kubernetes is a bit iffy. Download the image using other means.
 echo "getting binaries from docker image"
-./download-frozen-image-v2.sh /tmp/neondb neondatabase/neon:${DOCKER_TAG}
+./download-frozen-image-v2.sh /tmp/neondb neondatabase/neon:${DOCKER_TAG} >&2
 mkdir /tmp/out
 for f in $(jq -r '.[0].Layers[]' /tmp/neondb/manifest.json); do
 	tar -C /tmp/out -xf "/tmp/neondb/${f}"
