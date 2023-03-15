@@ -6,7 +6,7 @@
   tasks:
     - name: Read existing service version
       ansible.builtin.fetch:
-        src: "/var/run/{{ pvn_service }}.version"
+        src: "/var/run/{{ pvn_service_id }}.version"
         dest: "/tmp/versions/{{ inventory_hostname }}"
         flat: true
         fail_on_missing: false

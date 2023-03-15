@@ -180,7 +180,7 @@
   tasks:
     - name: emit version file
       copy:
-        dest: "/var/run/{{ pvn_service }}.version"
+        dest: "/var/run/{{ pvn_service_id }}.version"
         content: "{{ pvn_service_version }}"
       tags:
       - pageserver
