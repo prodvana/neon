@@ -17,7 +17,7 @@ while IFS= read -r line; do
 		break
 	fi
 	splits=($line)
-	versions=$(jq -n --arg versions "$versions" --arg ver "${splits[1]}" --arg replicas "${splits[0]}" '$versions | fromjson + [ {"service_version": $ver, "replicas": $replicas} ]')
+	versions=$(jq -n --arg versions "$versions" --arg ver "${splits[1]}" --argjson replicas "${splits[0]}" '$versions | fromjson + [ {"service_version": $ver, "replicas": $replicas} ]')
 
 done <<< $(find /tmp/versions -type f -print0 | xargs -0 -I % sh -c 'cat %; echo "";' | sort | uniq -c)
 
