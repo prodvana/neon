@@ -37,7 +37,5 @@ storage:
           ansible_host: i-0e09cd108279eb4f5
         ec2-34-219-180-253.us-west-2.compute.amazonaws.com:
           ansible_host: i-06083acd29327dce3
-        ec2-35-92-31-168.us-west-2.compute.amazonaws.com:
-          ansible_host: i-0ba39b03d290c65a3
         ec2-35-91-115-171.us-west-2.compute.amazonaws.com:
           ansible_host: i-0f0929baf23d4127e
