@@ -13,6 +13,9 @@ hosts=$(ansible-inventory -i prodvana.us-west-2.hosts.yaml -e @ssm_config storag
 versions="[]"
 
 while IFS= read -r line; do
+	if [[ "$line" == "" ]]; then
+		break
+	fi
 	splits=($line)
 	versions=$(jq -n --arg versions "$versions" --arg ver "${splits[1]}" --arg replicas "${splits[0]}" '$versions | fromjson + [ {"service_version": $ver, "replicas": $replicas} ]')
 
