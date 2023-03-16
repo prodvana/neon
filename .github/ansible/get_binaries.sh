@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/bash -x
 
 set -e
 
 if [ -n "${DOCKER_TAG}" ]; then
   # Verson is DOCKER_TAG but without prefix
-  VERSION=$(echo $DOCKER_TAG | sed 's/^.*-//g')
+  VERSION=$(echo $DOCKER_TAG | sed 's/^.*://g')
 else
   echo "Please set DOCKER_TAG environment variable"
   exit 1
@@ -18,7 +18,7 @@ mkdir neon_install
 # retrieve binaries from docker image
 # Running docker inside Docker or inside Kubernetes is a bit iffy. Download the image using other means.
 echo "getting binaries from docker image"
-./download-frozen-image-v2.sh /tmp/neondb neondatabase/neon:${DOCKER_TAG} >&2
+./download-frozen-image-v2.sh /tmp/neondb neondatabase/neon:${VERSION} >&2
 mkdir /tmp/out
 for f in $(jq -r '.[0].Layers[]' /tmp/neondb/manifest.json); do
 	tar -C /tmp/out -xf "/tmp/neondb/${f}"
