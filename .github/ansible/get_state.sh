@@ -10,11 +10,12 @@ ansible-playbook -v get_state.yaml -i prodvana.us-west-2.hosts.yaml -e @ssm_conf
 
 hosts=$(ansible-inventory -i prodvana.us-west-2.hosts.yaml -e @ssm_config storage --list | jq -r '._meta.hostvars | keys')
 
-versions="{}"
-for f in $(find /tmp/versions/ -name '*.version'); do
-	host=$(basename "${f}");
-	v=$(cat "${f}")
-	versions=$(jq -n --arg versions "$versions" --arg key "$host" --arg value "$v" '$versions | fromjson + { ($key) : $value }')
-done
+versions="[]"
+
+while IFS= read -r line; do
+	splits=($line)
+	versions=$(jq -n --arg versions "$versions" --arg ver "${splits[1]}" --arg replicas "${splits[0]}" '$versions | fromjson + [ {"service_version": $ver, "replicas": $replicas} ]')
+
+done <<< $(find /tmp/versions -type f -print0 | xargs -0 -I % sh -c 'cat %; echo "";' | sort | uniq -c)
 
 jq -n --argjson inst "$hosts" --argjson v "$versions" '{"instances": $inst, "versions": $v}'
