@@ -3,7 +3,7 @@ storage:
     bucket_name: pvn-neon-demo-storage-us-west-2
     bucket_region: us-west-2
     console_mgmt_base_url: http://neon-internal-api.aws.neon.build
-    broker_endpoint: http://k8s-pvndemor-storageb-da636619b2-1047442423.us-west-2.elb.amazonaws.com:50051
+    broker_endpoint: http://k8s-neonstor-neonstor-ccbf677dc7-f96f598b6fafcd5f.elb.us-west-2.amazonaws.com:50051
     pageserver_config_stub:
       pg_distrib_dir: /usr/local
       metric_collection_endpoint: http://neon-internal-api.aws.neon.build/billing/api/v1/usage_events
